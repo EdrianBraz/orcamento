@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    background-color: rgb(131, 32, 32);
+    font-family: "Roboto", sans-serif;
+    padding: 0px;
+}
+
+body {
+    display: grid;
+    justify-content: space-around;
+}
+
+header {
+    display: grid;
+    background-color: rgba(112, 0, 0, 0.685);
+    justify-content: center;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.logo {
+    background-color: rgba(126, 0, 0, 0);
+    width: 200px;
+    height: 60px;
+}
+/*textos*/
+.text1 {
+    color: rgb(138, 138, 138);
+    font-size: 12px;
+}
+
+.informacoes{
+    font-size: 20px;
+    color: rgb(66, 1, 1);
+}
+
+h2 {
+    background-color: rgb(216, 216, 216);
+    font-size: 15px;
+    text-align: center;
+    color: rgb(143, 0, 0);
+}
+
+p {
+    font-size: 13px;
+}
+
+.infomedidas, .infomedidas1 {
+    font-size: 12px;
+    color: rgb(167, 167, 167)
+}
+
+/*coluna calculo*/
+.colunacalculo {
+    display: grid;
+    padding: 0 20px 0 0;
+
+}
+
+.colcalctampo {
+    grid-column: 1;
+    grid-row: 1;
+    transform: translate(20px)
+}
+
+.colcalcsoleira {
+    grid-column: 2;
+    grid-row: 1;
+    transform: translate(1px)
+}
+
+/*coluna resultado*/
+.colunaresultado {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    border-radius: 0px 0px 8px 8px;
+}
+
+.colrestampo {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.colressoleira {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.hidden {
+    display: none;
+}
+/*botões*/
+.botao {
+    width: 150px;
+    height: 70px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+button#lista, button#listasoleira{
+    padding: 5px;
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 16px;
+
+}
+.botaocalc {
+    background-color: rgb(212, 115, 115);
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 15px;
+}
+
+li {
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    grid-template-rows: 25px 1fr;
+}
+
+.infomedidas {
+    display: flex;
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: -8px;
+}
+
+.botaoX {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    width: auto;
+    height: auto;
+    border-radius: 2px;
+    justify-content: center;
+    align-content: center;
+    font-size: 15px;
+    background-color: rgba(211, 0, 0, 0.671);
+}
+
+button1 {
+    width: 0;
+    height: 0;
+}
+
+button {
+    background-color: rgb(214, 150, 150);
+    border: 10px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    padding: 4px 10px;
+}
+
+.conteudo, .tampo, p, div, li, span {
+    background-color: rgb(233, 233, 233);
+    border: 10px;
+    border-color: rgb(255, 255, 255);
+}
+
+div {
+    padding: 5px;
+}
+
+.input {
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    border: 10px;
+}
+
+input[type="number"i] {
+    padding-block: 2px;
+    padding-inline: 4px;
+    width: 200px;
+    height: 20px;
+}

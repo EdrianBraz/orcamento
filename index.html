@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="/LogoMenu.png" class="logo">
+    </header>
+    <div class="colunacalculo">
+        <div class="colcalctampo">
+            <div class="tampo" id="tampo">
+                <button id="buttonclick" class="botao">Clique aqui para calcular Tampo</button>
+                <div id="elementHidden" class="hidden">
+                    <div class="conteudo">
+                        <span class="text1">
+                            <p class="informacoes">Tampo inclui valores de: balcões, cozinhas, lavatórios e todos serviços entre 30cm e 120cm de profundidade.</p>
+                        </span>
+                        <p>Caso seja mais de uma peça ou balcão em formato L ou U, fazer cálculo de cada peça separadamente e adicionar a lista</p>
+
+                        <p>Inserir o valor do material</p><input type="number" class="input" id="valormaterialtamp" placeholder="exemplo: 290" >
+                        <p>Inserir o comprimento</p><input type="number" class="input" id="comptampo" placeholder="exemplo: 100 cm" >cm
+                        <p>Inserir a largura</p><input type="number" class="input" id="largtampo" min="30" max="120" placeholder="padrão entre 50 e 60 cm" onchange="validarInputY()" >cm
+                        <p>Rodopia</p><input type="number" class="input" id="altrodopia" placeholder="padrão 10 cm sem custo">cm
+                        <p>Sóculo rodapé</p><input type="number" class="input" id="altsoculo" placeholder="15 cm">cm
+                        <p></p>
+                        <button onclick="resultado()" class="botaocalc">Calcular</button>
+                        <div id="valtampo"></div>
+                        <div id="valrodopia"></div>
+                        <div id="valsoculo"></div>
+                        <div class="infomedidas1">
+                            <span id="mcomptampo"></span>
+                            <span id="mlargtampo"></span>
+                            <span id="maltrodopia"></span>
+                            <span id="maltsoculo"></span>
+                        </div>
+                        <button id="lista">Inserir no Carrinho</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="colcalcsoleira">
+            <div class="soleira" id="soleira">
+                <button id="buttonclick2" class="botao">Clique aqui para calcular Soleira</button>
+                <div id="elementHidden2" class="hidden">
+                    <span class="text1">
+                        <p class="informacoes">Soleiras inclui todos os tipos de peças de até 30cm de largura e com acabamento simples 2cm.</p>
+                    </span>
+                    <p>Caso seja mais de uma peça fazer cálculo de cada peça separadamente e adicionar a lista</p>
+
+                    <p>Inserir o valor do material</p><input type="number" class="input" id="valormaterialsol" placeholder="exemplo: 290" >
+                    <p>Inserir o comprimento</p><input type="number" class="input" id="compsoleira" placeholder="100 cm">cm
+                    <p>Inserir a largura</p><input type="number" class="input" id="largsoleira" placeholder="15 cm" min="0" max="40" onchange="validarInputY1()">cm
+                    <p></p>
+                    <button onclick="resultadosoleira()" class="botaocalc">Calcular</button>
+                    <div id="valorsoleira"></div>
+                    <div class="infomedidas1">
+                        <span id="infcompsoleira"></span>
+                        <span id="inflargsoleira"></span>
+                    </div>
+                    <button id="listasoleira">Inserir no Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="colunaresultado">
+        <div class="colrestampo">
+            <h2>Tampos</h2>
+            <p id="lista-resultados"></p>
+                <p id="total"></p>
+                <p id="totalavista"></p>
+        </div>
+        <div class="colressoleira">
+        <h2>Soleiras</h2>
+        <p id="lista-resultado-soleira"></p>
+            <p id="totalsoleira"></p>
+            <p id="totalsoleiraavista"></p>
+        </div>
+    </div>
+
+
+    <footer><!-- Seu conteúdo aqui se necessário --></footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
