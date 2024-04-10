@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="/LogoMenu.png" class="logo">
+    </header>
+    
+    <div class="offline-message">
+        <h2>Você está offline</h2>
+        <p>Parece que você está sem conexão com a internet no momento.</p>
+        <p>Alguns recursos podem não estar disponíveis.</p>
+    </div>
+
+    <div class="colunacalculo offline-hidden">
+        <!-- Seu conteúdo existente aqui -->
+    </div>
+
+    <div class="colunaresultado offline-hidden">
+        <!-- Seu conteúdo existente aqui -->
+    </div>
+
+    <footer><!-- Seu conteúdo aqui se necessário --></footer>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado com sucesso:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Erro ao registrar Service Worker:', error);
+                    });
+            });
+        }
+
+        // Verificar se o navegador está offline
+        window.addEventListener('offline', () => {
+            showOfflineMessage();
+        });
+
+        // Verificar se o navegador está online
+        window.addEventListener('online', () => {
+            hideOfflineMessage();
+        });
+
+        // Funções para mostrar e ocultar a mensagem de offline
+        function showOfflineMessage() {
+            const offlineMessage = document.querySelector('.offline-message');
+            const offlineHiddenElements = document.querySelectorAll('.offline-hidden');
+            offlineMessage.style.display = 'block';
+            offlineHiddenElements.forEach(element => {
+                element.style.display = 'none';
+            });
+        }
+
+        function hideOfflineMessage() {
+            const offlineMessage = document.querySelector('.offline-message');
+            const offlineHiddenElements = document.querySelectorAll('.offline-hidden');
+            offlineMessage.style.display = 'none';
+            offlineHiddenElements.forEach(element => {
+                element.style.display = 'block';
+            });
+        }
+
+        // Verificar o status de conexão ao carregar a página
+        window.onload = () => {
+            if (!navigator.onLine) {
+                showOfflineMessage();
+            }
+        };
+    </script>
+</body>
+</html>
