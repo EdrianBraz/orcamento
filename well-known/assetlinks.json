@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "MRV.Valores",
+        "sha256_cert_fingerprints": ["EE:AE:B6:C5:22:BE:9D:4C:14:9C:7D:42:70:6B:36:72:5B:0D:1B:FA:95:14:FE:82:9E:AC:E4:11:BF:A4:4A:C1"]
+      }
+    }]
