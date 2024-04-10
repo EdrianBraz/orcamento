@@ -13,14 +13,14 @@ body {
 }
 
 header {
-    margin-top: 200px;
     display: grid;
     background-color: rgba(112, 0, 0, 0.685);
     justify-content: center;
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 100px 200px;
 }
 
 .logo {
+    margin-top: 200px;
     background-color: rgba(126, 0, 0, 0);
     width: 200px;
     height: 60px;
