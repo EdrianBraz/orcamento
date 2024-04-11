@@ -265,7 +265,7 @@ function exibirResultadosSalvos() {
                 '<p class="infomedidas"> Medidas -- Comprimento: ' + resultado.comprimentoTampo + ' cm   |   largura: ' + resultado.larguraTampo + ' cm   |   Altura Rodopia: ' + resultado.alturaRodopia + ' cm   |   Altura Soculo: ' + resultado.alturaSoculo + ' cm </p>';
 
             let botaoExcluir = document.createElement('button1');
-            botaoExcluir.innerHTML = '<button onclick="exibirlista()" class="botaoX"> X </button>';
+            botaoExcluir.innerHTML = '<button onclick="exibirlistaDuasVezes()" class="botaoX"> X </button>';
             botaoExcluir.addEventListener('click', function () {
                 resultadosSalvos.splice(indice, 1);
                 localStorage.setItem('resultados', JSON.stringify(resultadosSalvos)); // Atualiza o armazenamento local
@@ -311,7 +311,7 @@ function exibirResultadoSalvoSoleira() {
             itemListaSoleira.innerHTML = 'Soleira: ' + (indice + 1) + '  |  ' + formatarMoeda(resultado.valorSoleira) + ' -- <p class="infomedidas2"> Comprimento: ' + resultado.compSoleira + ' cm   |   ' + ' Largura: ' + resultado.largSoleira + ' cm</p> ';
 
             let botaoExcluir = document.createElement('button1');
-            botaoExcluir.innerHTML = '<button onclick="exibirlista()" class="botaoX"> X </button>';
+            botaoExcluir.innerHTML = '<button onclick="exibirlistaDuasVezes()" class="botaoX"> X </button>';
             botaoExcluir.addEventListener('click', function () {
                 resultadoSalvoSoleira.splice(indice, 1);
                 localStorage.setItem('resultadosoleira', JSON.stringify(resultadoSalvoSoleira)); // Atualiza o armazenamento local
@@ -334,13 +334,23 @@ function exibirResultadoSalvoSoleira() {
     totalprecosoleira = totalsoleira;
 }
 
+function exibirlistaDuasVezes() {
+    exibirlista();
+    setTimeout(exibirlista, 500);
+}
+
+
 function exibirlista() {
     exibirResultadoSalvoSoleira()
     exibirResultadosSalvos()
-    var precototal = totalprecotampo + totalprecosoleira;
-        if (isNaN(precototal)) {
-        precototal = 0;
+    if (isNaN(totalprecotampo)) {
+        totalprecotampo = 0;
     }
+    if (isNaN(totalprecosoleira)) {
+        totalprecosoleira = 0;
+    }
+    var precototal = totalprecotampo + totalprecosoleira;
+
     document.getElementById('totalservico').innerHTML = '<p class="texttotal"> Total: ' + formatarMoeda(precototal) + '</p>';
     document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.95) + '</p>';
 
