@@ -25,6 +25,38 @@ header {
     width: 200px;
     height: 60px;
 }
+/*materiais*/
+.menu {
+    display: flex;
+    overflow-x: auto; 
+}
+div.menu{
+    height: auto;
+    width: 80vw;
+    max-width: 1000px;
+    min-width: 300px;
+}
+.imagem {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.imagem img {
+    max-width: 100px; /* Ajuste conforme necessário */
+    width: 100px; /* largura desejada */
+    height: 100px; /* altura desejada */
+    object-fit: cover; /* para garantir que a imagem preencha a área e corte o excesso */
+
+}
+
+.imagem p {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.imagem.selecionada {
+    filter: brightness(70%); /* Ajuste o valor conforme necessário */
+}
 /*textos*/
 .text1 {
     color: rgb(138, 138, 138);
@@ -47,7 +79,7 @@ p {
     font-size: 13px;
 }
 
-.infomedidas, .infomedidas1 {
+.infomedidas, .infomedidas1, .infomedidas2 {
     font-size: 12px;
     color: rgb(167, 167, 167)
 }
@@ -56,7 +88,8 @@ p {
 .colunacalculo {
     display: grid;
     padding: 0 20px 0 0;
-
+    justify-content: space-evenly;
+    align-items: baseline;
 }
 
 .colcalctampo {
@@ -70,13 +103,17 @@ p {
     grid-row: 1;
     transform: translate(1px)
 }
-
 /*coluna resultado*/
 .colunaresultado {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     border-radius: 0px 0px 8px 8px;
+}
+div#soleira.soleira, div#tampo.tampo{
+    display: grid;
+    justify-items: center;
+    
 }
 
 .colrestampo {
@@ -85,8 +122,54 @@ p {
 }
 
 .colressoleira {
+    width: auto;
+    height: 100%;
     grid-column: 2;
     grid-row: 1;
+}
+.cuba{
+    font-size: 11px;
+    color:rgb(184, 2, 2);
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    text-align: center;
+}
+/*coluna footer*/
+footer{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+
+}
+
+.totalservico{
+    text-align: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30px 30px;
+    display: grid;
+    grid-row: 1;
+    height: fit-content;
+    width: calc(100% - 10px);
+    align-items: center;
+}
+.texttotal{
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+}
+.whatsapp{
+    display: grid;
+    grid-row: 2;
+    height: fit-content;
+    width: calc(100% - 10px);
+}
+.whatsappbutton{
+    color:rgb(255, 255, 255);
+    background-color: rgb(63, 179, 83);
+    padding: 10px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 .hidden {
@@ -103,7 +186,7 @@ button#lista, button#listasoleira{
     padding: 5px;
     width: 100%;
     font-family: "Roboto", sans-serif;
-    font-weight: 200;
+    font-weight: 400;
     font-style: normal;
     font-size: 16px;
 
@@ -118,14 +201,18 @@ button#lista, button#listasoleira{
 li {
     display: grid;
     grid-template-columns: 1fr 40px;
-    grid-template-rows: 25px 1fr;
+    grid-template-rows: 0fr 0fr;
 }
 
 .infomedidas {
     display: flex;
     grid-column: 1;
     grid-row: 2;
-    margin-top: -8px;
+}
+.infomedidas2 {
+    display: flex;
+    grid-column: 1;
+    grid-row: 2;
 }
 
 .botaoX {
@@ -140,24 +227,39 @@ li {
     font-size: 15px;
     background-color: rgba(211, 0, 0, 0.671);
 }
+.botaoX:hover{
+    background-color: rgba(204, 102, 102, 0.671);
+}
+.botaoX:active {
+    background-color: rgb(100, 29, 29);
+}
 
 button1 {
     width: 0;
     height: 0;
 }
 
+
 button {
-    background-color: rgb(214, 150, 150);
+    background-color: rgb(250, 138, 138);
     border: 10px;
     border-color: rgb(255, 255, 255);
     border-radius: 3px;
     padding: 4px 10px;
 }
+button:hover {
+    background-color: rgb(200, 100, 100);
+}
+button:active {
+    background-color: rgb(150, 50, 50);
+}
 
 .conteudo, .tampo, p, div, li, span {
     background-color: rgb(233, 233, 233);
-    border: 10px;
     border-color: rgb(255, 255, 255);
+}
+.conteudo, .tampo{
+    padding: 10px;
 }
 
 div {
@@ -176,3 +278,29 @@ input[type="number"i] {
     width: 200px;
     height: 20px;
 }
+/*detalhes*/
+.barra{
+    font-size: 10px;
+}
+
+.mensagem {
+    display: none;
+    color: red;
+  }
+
+  .input-error {
+    animation: shake 0.4s ease-in-out 2;
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(-5px);
+    }
+    25%, 75% {
+      transform: translateX(5px);
+    }
+    50% {
+      transform: translateX(-5px);
+    }
+  }
+  
