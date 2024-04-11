@@ -122,7 +122,7 @@ function resultado() {
     var resRodopia = alturarodopia * percentualsoleira / 100;
 
     if (alturasoculo > 0) {
-        alturasoculo = comprimentotampo * alturasoculo * material;
+        alturasoculo = (comprimentotampo + 50) * alturasoculo * material;
     } else {
         alturasoculo = 0;
     }
