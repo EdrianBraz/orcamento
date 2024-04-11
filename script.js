@@ -26,10 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const buttonclick = document.getElementById("buttonclick");
     const buttonclick2 = document.getElementById("buttonclick2");
-    let isBig = false; // Variável para rastrear o estado do botão
+    let isBig = false; 
 
     buttonclick.addEventListener('click', function () {
-        // Alterna o tamanho do botão
         if (isBig) {
             buttonclick.style.width = "150px";
             buttonclick.style.height = "70px";
@@ -54,17 +53,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 });
+var material = 0;
+
+document.addEventListener("DOMContentLoaded", function() {
+    var imagens = document.querySelectorAll('.imagem');
+
+    imagens.forEach(function(imagem) {
+        imagem.addEventListener('click', function() {
+            var valorMaterial = parseFloat(imagem.dataset.valor);
+            material = valorMaterial;
+
+            imagens.forEach(function(outraImagem) {
+                outraImagem.classList.remove('selecionada');
+            });
+            imagem.classList.add('selecionada');
+        });
+
+        imagem.addEventListener('dragstart', function(event) {
+            event.dataTransfer.setData('text/plain', imagem.id);
+        });
+    });
+});
 
 var percentualtampo1 = 1.8;
 var percentualsoleira = 1.6;
 var percentualtampo = 0;
 
 function resultado() {
+
     var comprimentotampo = parseFloat(document.getElementById('comptampo').value);
     var larguratampo = parseFloat(document.getElementById('largtampo').value);
     var alturarodopia = parseFloat(document.getElementById('altrodopia').value);
     var alturasoculo = parseFloat(document.getElementById('altsoculo').value);
-    var material = parseFloat(document.getElementById('valormaterialtamp').value);
     var inftampo = document.getElementById('valtampo');
     var infrodopia = document.getElementById('valrodopia');
     var infsoculo = document.getElementById('valsoculo');
@@ -90,57 +110,61 @@ function resultado() {
         alturasoculo = 0;
     }
 
-    if (comprimentotampo > 0){
     infocomprimentotampo.innerHTML = ' Comprimento: ' + comprimentotampo + ' cm';
     infolarguratampo.innerHTML = ' Largura: ' + larguratampo + ' cm';
     infoalturarodopia.innerHTML = 'Altura Rodopia: ' + alturarodopia + ' cm';
     infoalturasoculo.innerHTML = 'Altura Soculo: ' + alturasoculo + ' cm';
-    }
-    if (larguratampo > 0 && larguratampo < 50) {
-        var difpercentualtampo = (50 - larguratampo) / 100;
-        percentualtampo = percentualtampo1 - difpercentualtampo;
-    } else if (larguratampo > 60) {
-        var difpercentualtampo = (larguratampo - 60) * 2.5 / 100;
-        percentualtampo = percentualtampo1 + difpercentualtampo;
-    } else if (larguratampo === '' || larguratampo === 0) {
-        larguratampo = 0;
-    }
+        if(material > 0){
+            if (larguratampo > 0 && larguratampo < 50) {
+                var difpercentualtampo = (50 - larguratampo) / 100;
+                percentualtampo = percentualtampo1 - difpercentualtampo;
+            } else if (larguratampo > 60) {
+                var difpercentualtampo = (larguratampo - 60) * 2.5 / 100;
+                percentualtampo = percentualtampo1 + difpercentualtampo;
+            } else if (larguratampo === '' || larguratampo === 0) {
+                larguratampo = 0;
+            }
 
-    if (isNaN(comprimentotampo) || larguratampo === 0) {
-        comprimentotampo = 0;
-    } else {
-        comprimentotampo = comprimentotampo
-    }
-    var resTampo = ((comprimentotampo * material) * (percentualtampo > 0 ? percentualtampo : percentualtampo1));
-    if (alturarodopia > 1, alturarodopia < 11) {
-        alturarodopia = alturarodopia;
-    } else if (alturarodopia > 11) {
-        alturarodopia = comprimentotampo * alturarodopia * material;
-    } else {
-        alturarodopia = 0;
-    }
-    var resRodopia = alturarodopia * percentualsoleira / 100;
+            if (isNaN(comprimentotampo) || larguratampo === 0) {
+                comprimentotampo = 0;
+            } else {
+                comprimentotampo = comprimentotampo
+            }
+            var resTampo = ((comprimentotampo * material) * (percentualtampo > 0 ? percentualtampo : percentualtampo1));
+            if (alturarodopia > 1, alturarodopia < 11) {
+                alturarodopia = alturarodopia;
+            } else if (alturarodopia > 11) {
+                alturarodopia = comprimentotampo * alturarodopia * material;
+            } else {
+                alturarodopia = 0;
+            }
+            var resRodopia = alturarodopia * percentualsoleira / 100;
 
-    if (alturasoculo > 0) {
-        alturasoculo = comprimentotampo * alturasoculo * material;
-    } else {
-        alturasoculo = 0;
-    }
-    resSoculo = alturasoculo * percentualsoleira / 100;
+            if (alturasoculo > 0) {
+                alturasoculo = comprimentotampo * alturasoculo * material;
+            } else {
+                alturasoculo = 0;
+            }
+            resSoculo = alturasoculo * percentualsoleira / 100;
+        } else {
+            alert('Escolha um material.')
+            resTampo = 0;
+            resRodopia = 0;
+            resSoculo = 0;
+        }
 
-    if (resTampo > 0) {
+
         inftampo.textContent = 'Valor Tampo:  ' + formatarMoeda(resTampo / 100);
         infrodopia.textContent = 'Valor Rodopia:  ' + formatarMoeda(resRodopia / 100);
         infsoculo.textContent = 'Valor Soculo:  ' + formatarMoeda(resSoculo / 100);
 
-    }
 }
+
 
 function resultadosoleira() {
 
     var comprimentosoleira = parseFloat(document.getElementById('compsoleira').value);
     var largurasoleira = parseFloat(document.getElementById('largsoleira').value);
-    var material = parseFloat(document.getElementById('valormaterialsol').value);
     var infsoleira = document.getElementById('valorsoleira');
     var infcompsoleira = document.getElementById('infcompsoleira');
     var inflargsoleira = document.getElementById('inflargsoleira');
@@ -155,12 +179,20 @@ function resultadosoleira() {
         material = 0;
     }
 
-
-    var resSoleira = (comprimentosoleira * (largurasoleira + 1) * material * percentualsoleira) / 100;
-    infsoleira.textContent = 'Valor Soleira:  ' + formatarMoeda(resSoleira / 100);
     infcompsoleira.textContent = 'Comrpimento: ' + comprimentosoleira + ' cm --- ';
     inflargsoleira.textContent = 'Largura: ' + largurasoleira + ' cm';
+    if (material > 0){
+     if(comprimentosoleira > 0){
+    var resSoleira = (comprimentosoleira * (largurasoleira + 1) * material * percentualsoleira) / 100;
+    } else {
+        var resSoleira = 0;
+    }} else {
+        var resSoleira = 0;
+        alert('Escolha o material.')
+    }
+    infsoleira.textContent = 'Valor Soleira:  ' + formatarMoeda(resSoleira / 100);
 
+    
 }
 
 function formatarMoeda(valor) {
@@ -209,14 +241,12 @@ function salvarResultadoSoleira() {
     exibirResultadoSalvoSoleira();
 
 }
-
+var totalprecotampo = 0;
 
 function exibirResultadosSalvos() {
     var resultadosSalvos = localStorage.getItem('resultados');
-
-
     if (resultadosSalvos) {
-        resultadosSalvos = JSON.parse(resultadosSalvos);
+        var resultadosSalvos = JSON.parse(resultadosSalvos);
         var listaResultadosElemento = document.getElementById('lista-resultados');
         listaResultadosElemento.innerHTML = '';
         var totaltampo = 0;
@@ -229,12 +259,12 @@ function exibirResultadosSalvos() {
 
         resultadosSalvos.forEach(function (resultado, indice) {
             let itemLista = document.createElement('li');
-            itemLista.innerHTML = 'Produto: ' + (indice + 1) + ' - Tampo ' + formatarMoeda(resultado.valorTampo) + ' - Rodopia ' + formatarMoeda(resultado.valorRodopia) + ' - Sóculo ' +
-                formatarMoeda(resultado.valorSoculo) + ' ---   SubTotal ' + formatarMoeda(resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo) +
-                '<p class="infomedidas"> Medidas -- Comprimento: ' + resultado.comprimentoTampo + ' cm   |   largura: ' + resultado.larguraTampo + ' cm   |   Altura Rodopia: ' + resultado.alturaRodopia + ' cm   |   Altura Soculo: ' + resultado.alturaSoculo + ' cm ';
+            itemLista.innerHTML = 'Tampo: ' + (indice + 1) + '  |  ' + formatarMoeda(resultado.valorTampo) + ' - Rodopia ' + formatarMoeda(resultado.valorRodopia) + ' - Sóculo ' +
+                formatarMoeda(resultado.valorSoculo) + ' ---  SubTotal' + formatarMoeda(resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo) +
+                '<p class="infomedidas"> Medidas -- Comprimento: ' + resultado.comprimentoTampo + ' cm   |   largura: ' + resultado.larguraTampo + ' cm   |   Altura Rodopia: ' + resultado.alturaRodopia + ' cm   |   Altura Soculo: ' + resultado.alturaSoculo + ' cm </p>';
 
             let botaoExcluir = document.createElement('button1');
-            botaoExcluir.innerHTML = '<button class="botaoX"> X </button>';
+            botaoExcluir.innerHTML = '<button onclick="exibirlista()" class="botaoX"> X </button>';
             botaoExcluir.addEventListener('click', function () {
                 resultadosSalvos.splice(indice, 1);
                 localStorage.setItem('resultados', JSON.stringify(resultadosSalvos)); // Atualiza o armazenamento local
@@ -258,9 +288,11 @@ function exibirResultadosSalvos() {
     } else {
         document.getElementById('lista-resultados').textContent = 'Nenhum resultado salvo.';
     }
+
+    totalprecotampo = totaltampo + totalrodopia + totalsoculo;
 }
 
-
+var totalprecosoleira = 0;
 
 function exibirResultadoSalvoSoleira() {
     var resultadoSalvoSoleira = localStorage.getItem('resultadosoleira');
@@ -275,10 +307,10 @@ function exibirResultadoSalvoSoleira() {
 
         resultadoSalvoSoleira.forEach(function (resultado, indice) {
             let itemListaSoleira = document.createElement('li');
-            itemListaSoleira.innerHTML = 'Produto: ' + (indice + 1) + ' Soleira ' + formatarMoeda(resultado.valorSoleira) + ' -- <p class="infomedidas"> Comprimento: ' + resultado.compSoleira + ' cm   |   ' + ' Largura: ' + resultado.largSoleira + ' cm</p> ';
+            itemListaSoleira.innerHTML = 'Soleira: ' + (indice + 1 ) + '  |  ' + formatarMoeda(resultado.valorSoleira) + ' -- <p class="infomedidas2"> Comprimento: ' + resultado.compSoleira + ' cm   |   ' + ' Largura: ' + resultado.largSoleira + ' cm</p> ';
 
             let botaoExcluir = document.createElement('button1');
-            botaoExcluir.innerHTML = '<button class="botaoX"> X </button>';
+            botaoExcluir.innerHTML = '<button onclick="exibirlista()" class="botaoX"> X </button>';
             botaoExcluir.addEventListener('click', function () {
                 resultadoSalvoSoleira.splice(indice, 1);
                 localStorage.setItem('resultadosoleira', JSON.stringify(resultadoSalvoSoleira)); // Atualiza o armazenamento local
@@ -298,12 +330,15 @@ function exibirResultadoSalvoSoleira() {
     } else {
         document.getElementById('lista-resultados').textContent = 'Nenhum resultado salvo.';
     }
+totalprecosoleira = totalsoleira;
 }
+
 function exibirlista() {
-    resultado()
-    resultadosoleira()
-    var total3 = total1 + total2
-    console.log(total3);
+    exibirResultadoSalvoSoleira()
+    exibirResultadosSalvos()
+    var precototal = totalprecotampo + totalprecosoleira;
+    document.getElementById('totalservico').innerHTML = '<p class="texttotal"> Total: ' + formatarMoeda(precototal)+'</p>';
+    document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' +  formatarMoeda((precototal) * 0.95)+ '</p>';
 
 }
 
@@ -330,8 +365,83 @@ function validarInputY1() {
     }
 }
 
-document.getElementById('buttonclick').addEventListener('click', resultado);
-document.getElementById('buttonclick2').addEventListener('click', resultado);
+
+
+
+function extrairDadosParaWhatsApp() {
+    var resultadosSalvos = localStorage.getItem('resultados');
+    var resultadosSalvosSoleira = localStorage.getItem('resultadosoleira');
+    var mensagemWhatsApp = "Orçamento solicitado:\n\n";
+
+    if (resultadosSalvos) {
+        resultadosSalvos = JSON.parse(resultadosSalvos);
+        mensagemWhatsApp += "Tampos:\n";
+        resultadosSalvos.forEach(function(resultado, indice) {
+            mensagemWhatsApp += "  Produto " + (indice + 1) + ":\n";
+            mensagemWhatsApp += "    - Tampo: R$ " + resultado.valorTampo.toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Rodopia: R$ " + resultado.valorRodopia.toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Sóculo: R$ " + resultado.valorSoculo.toFixed(2) + "\n\n";
+            mensagemWhatsApp += "    - Subtotal: R$ " + (resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo).toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.comprimentoTampo + " cm, Largura = " + resultado.larguraTampo + " cm, Altura Rodopia = " + resultado.alturaRodopia + " cm, Altura Sóculo = " + resultado.alturaSoculo + " cm\n\n";
+        });
+    } else {
+        mensagemWhatsApp += "Nenhum tampo salvo.\n\n";
+    }
+
+    if (resultadosSalvosSoleira) {
+        resultadosSalvosSoleira = JSON.parse(resultadosSalvosSoleira);
+        mensagemWhatsApp += "Soleiras:\n";
+        resultadosSalvosSoleira.forEach(function(resultado, indice) {
+            mensagemWhatsApp += "  Produto " + (indice + 1) + ":\n";
+            mensagemWhatsApp += "    - Soleira: R$ " + resultado.valorSoleira.toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.compSoleira + " cm, Largura = " + resultado.largSoleira + " cm\n\n";
+        });
+    } else {
+        mensagemWhatsApp += "Nenhuma soleira salva.\n\n";
+    }
+
+    mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira).toFixed(2) + "\n";
+    mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira) * 0.95).toFixed(2) + "\n";
+    mensagemWhatsApp += "Valores sem cuba." + "\n";
+
+    return mensagemWhatsApp;
+}
+
+function enviarMensagemWhatsApp() {
+    var mensagem = extrairDadosParaWhatsApp();
+    var numeroTelefone = "5548996556490";
+    var linkWhatsapp = "https://wa.me/" + numeroTelefone + "?text=" + encodeURIComponent(mensagem);
+
+    window.open(linkWhatsapp);
+}
+
+
+document.getElementById("whatsappbutton").addEventListener("click", enviarMensagemWhatsApp);
 document.getElementById('lista').addEventListener('click', salvarResultado);
+document.getElementById('lista').addEventListener('click', exibirlista);
 document.getElementById('listasoleira').addEventListener('click', salvarResultadoSoleira);
+document.getElementById('listasoleira').addEventListener('click', exibirlista);
+
+
+function validarInput(inputId, mensagemId) {
+    const input = document.getElementById(inputId);
+    const mensagem = document.getElementById(mensagemId);
+
+    if (!input.value) {
+      input.classList.add('input-error');
+      mensagem.style.display = 'block';
+    } else {
+      input.classList.remove('input-error');
+      mensagem.style.display = 'none';
+    }
+  }
+
+
+function exibirTudo() {
+    exibirlista();
+    exibirResultadoSalvoSoleira();
+    exibirResultadosSalvos();
+  }
+  
+  window.onload = exibirTudo;
 
