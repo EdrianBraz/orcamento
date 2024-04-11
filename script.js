@@ -338,6 +338,9 @@ function exibirlista() {
     exibirResultadoSalvoSoleira()
     exibirResultadosSalvos()
     var precototal = totalprecotampo + totalprecosoleira;
+        if (isNaN(precototal)) {
+        precototal = 0;
+    }
     document.getElementById('totalservico').innerHTML = '<p class="texttotal"> Total: ' + formatarMoeda(precototal) + '</p>';
     document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.95) + '</p>';
 
