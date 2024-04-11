@@ -81,7 +81,7 @@ var percentualtampo = 0;
 
 function resultado() {
 
-    var comprimentotampo = parseFloat(document.getElementById('comptampo').value);
+    var comprimentotampo = parseFloat(document.getElementById('comptampo').value.replace(/\D/g, ''));
     var larguratampo = parseFloat(document.getElementById('largtampo').value);
     var alturarodopia = parseFloat(document.getElementById('altrodopia').value);
     var alturasoculo = parseFloat(document.getElementById('altsoculo').value);
@@ -163,7 +163,7 @@ function resultado() {
 
 function resultadosoleira() {
 
-    var comprimentosoleira = parseFloat(document.getElementById('compsoleira').value);
+    var comprimentosoleira = parseFloat(document.getElementById('compsoleira').value.replace(/\D/g, ''));
     var largurasoleira = parseFloat(document.getElementById('largsoleira').value);
     var infsoleira = document.getElementById('valorsoleira');
     var infcompsoleira = document.getElementById('infcompsoleira');
