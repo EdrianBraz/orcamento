@@ -69,7 +69,7 @@ div.menu, div.cubacozinha, div.cubatanque {
 }
 
 .fotoscuba img, .fotostanque img {
-    max-width: 500px;
+    max-width: 300px;
 
     width: 300px;
 
@@ -80,10 +80,10 @@ div.menu, div.cubacozinha, div.cubatanque {
 
 button.cubas, button.tanques {
     margin: 2px;
-    width: 200px;
-    height: 30px;
+    height: 23px;
     background-color: rgb(176, 176, 236);
 }
+
 
 .imagem p, .fotoscuba p, .fotostanque p {
     font-size: 12px;
