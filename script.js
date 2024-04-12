@@ -22,6 +22,18 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleVisibility(buttonclick2, elementHidden2, buttonclick, "Clique aqui para calcular Soleira");
 });
 
+/*função para esconder haba cubas*/
+
+function hiddencubas() {
+    var cubacozinha = document.getElementById("cubacozinha");
+    cubacozinha.style.display = cubacozinha.style.display === "none" ? "flex" : "none";
+}
+
+function hiddentanque() {
+    var cubatanque = document.getElementById("cubatanque");
+    cubatanque.style.display = cubatanque.style.display === "none" ? "flex" : "none";
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const buttonclick = document.getElementById("buttonclick");
@@ -56,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
 var material = 0;
 var namematerial = [];
 
+/* Imagens dos materiais*/
 document.addEventListener("DOMContentLoaded", function () {
     var imagens = document.querySelectorAll('.imagem');
 
@@ -89,16 +102,82 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function selecmaterial(){
-var infotextomaterial = document.getElementById('textomaterial');
-    infotextomaterial.innerHTML = 'Material: '+ namematerial;
-    console.log(infotextomaterial)
+/*imagens das cubas*/
+var cuba = 0;
+var nomecuba = [];
+
+document.addEventListener("DOMContentLoaded", function () {
+    var fotoscuba = document.querySelectorAll('.fotoscuba');
+
+    fotoscuba.forEach(function (foto) {
+        foto.addEventListener('click', function () {
+            var valorCuba = parseFloat(foto.dataset.valor);
+            var nomeCuba = foto.dataset.name;
+            cuba = valorCuba;
+            nomecuba = nomeCuba;
+
+            fotoscuba.forEach(function (outraFoto) {
+                outraFoto.classList.remove('selecionada');
+            });
+
+            // Selecionar a imagem clicada
+            foto.classList.add('selecionada');
+        });
+
+        foto.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('text/plain', foto.id);
+        });
+    });
+
+    var tanque = 0;
+    var nometanque = [];
+    var fotostanque = document.querySelectorAll('.fotostanque');
+
+    fotostanque.forEach(function (foto) {
+        foto.addEventListener('click', function () {
+            var valorTanque = parseFloat(foto.dataset.valor);
+            var nomeTanque = foto.dataset.name;
+            tanque = valorTanque;
+            nometanque = nomeTanque;
+
+            fotostanque.forEach(function (outraFoto) {
+                outraFoto.classList.remove('selecionada');
+            });
+
+            // Selecionar a imagem clicada
+            foto.classList.add('selecionada');
+        });
+
+        foto.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('text/plain', foto.id);
+        });
+    });
+});
+
+
+
+/*Função para exibir nome do material e quando o material não esta selecionado*/
+var infoalertamaterial = document.getElementById('alertamaterial');
+var infoalertamaterialsol = document.getElementById('alertamaterialsol');
+
+function selecmaterial() {
+    var infotextomaterial = document.getElementById('textomaterial');
+    infotextomaterial.innerHTML = 'Material: ' + namematerial;
+
+    var infotextomaterialsol = document.getElementById('textomaterialsol');
+    infotextomaterialsol.innerHTML = 'Material: ' + namematerial;
+
+    infoalertamaterial.innerHTML = '';
+    infoalertamaterialsol.innerHTML = '';
+
+
+
 }
 
+/*calculo resultado do tampo*/
 var percentualtampo1 = 1.8;
 var percentualsoleira = 1.6;
 var percentualtampo = 0;
-
 
 function resultado() {
 
@@ -172,10 +251,12 @@ function resultado() {
         }
         resSoculo = alturasoculo * percentualsoleira / 100;
     } else {
-        alert('Escolha um material.')
         resTampo = 0;
         resRodopia = 0;
         resSoculo = 0;
+        infoalertamaterial.innerHTML = 'Selecione o material.';
+
+
     }
 
 
@@ -185,7 +266,7 @@ function resultado() {
 
 }
 
-
+/*caluclo do resultado das soleiras*/
 
 function resultadosoleira() {
 
@@ -195,8 +276,8 @@ function resultadosoleira() {
     var infcompsoleira = document.getElementById('infcompsoleira');
     var inflargsoleira = document.getElementById('inflargsoleira');
     var infonomematerialsol = document.getElementById('nomematerialsol');
-   
-    
+
+
 
     if (isNaN(comprimentosoleira)) {
         comprimentosoleira = 0;
@@ -219,7 +300,7 @@ function resultadosoleira() {
         }
     } else {
         var resSoleira = 0;
-        alert('Escolha o material.')
+        infoalertamaterialsol.innerHTML = 'Selecione o material.';
     }
     infsoleira.textContent = 'Valor Soleira:  ' + formatarMoeda(resSoleira / 100);
 
@@ -230,6 +311,8 @@ function formatarMoeda(valor) {
     valor = valor ?? 0; // Se valor for null ou undefined, atribui 0 a valor
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
+
+/*salvar os resultados no loca storange*/
 
 function salvarResultado() {
     var resultadosSalvos = localStorage.getItem('resultados');
@@ -266,12 +349,15 @@ function salvarResultadoSoleira() {
     compsoleira = parseFloat(document.getElementById('infcompsoleira').textContent.replace(/[^\d.,]/g, '').replace('.', '').replace(',', '.'));
     largsoleira = parseFloat(document.getElementById('inflargsoleira').textContent.replace(/[^\d.,]/g, '').replace('.', '').replace(',', '.'));
 
-    resultadoSalvoSoleira.push({ valorSoleira: soleira, compSoleira: compsoleira, largSoleira: largsoleira , materialSoleira: namematerial });
+    resultadoSalvoSoleira.push({ valorSoleira: soleira, compSoleira: compsoleira, largSoleira: largsoleira, materialSoleira: namematerial });
     localStorage.setItem('resultadosoleira', JSON.stringify(resultadoSalvoSoleira));
 
     exibirResultadoSalvoSoleira();
 
 }
+
+/*exibir os resultados do local storage*/
+
 var totalprecotampo = 0;
 
 function exibirResultadosSalvos() {
@@ -295,7 +381,7 @@ function exibirResultadosSalvos() {
                 '<p class="infomedidas"> Medidas -- Comprimento: ' + resultado.comprimentoTampo + ' cm   |   largura: ' + resultado.larguraTampo + ' cm   |   Altura Rodopia: ' + resultado.alturaRodopia + ' cm   |   Altura Soculo: ' + resultado.alturaSoculo + ' cm |   Material: ' + resultado.materialTampo + '</p>';
 
             let botaoExcluir = document.createElement('button1');
-            botaoExcluir.innerHTML = '<button onclick="exibirlistaDuasVezes()" class="botaoX"> X </button>';
+            botaoExcluir.innerHTML = '<button1 onclick="exibirlistaDuasVezes()" class="botaoX"> X </button1>';
             botaoExcluir.addEventListener('click', function () {
                 resultadosSalvos.splice(indice, 1);
                 localStorage.setItem('resultados', JSON.stringify(resultadosSalvos)); // Atualiza o armazenamento local
@@ -341,7 +427,7 @@ function exibirResultadoSalvoSoleira() {
             itemListaSoleira.innerHTML = 'Soleira: ' + (indice + 1) + '  |  ' + formatarMoeda(resultado.valorSoleira) + ' -- <p class="infomedidas2"> Comprimento: ' + resultado.compSoleira + ' cm   |   ' + ' Largura: ' + resultado.largSoleira + ' cm |   Material: ' + resultado.materialSoleira + '</p>';
 
             let botaoExcluir = document.createElement('button1');
-            botaoExcluir.innerHTML = '<button onclick="exibirlistaDuasVezes()" class="botaoX"> X </button>';
+            botaoExcluir.innerHTML = '<button1 onclick="exibirlistaDuasVezes()" class="botaoX"> X </button1>';
             botaoExcluir.addEventListener('click', function () {
                 resultadoSalvoSoleira.splice(indice, 1);
                 localStorage.setItem('resultadosoleira', JSON.stringify(resultadoSalvoSoleira)); // Atualiza o armazenamento local
@@ -363,12 +449,14 @@ function exibirResultadoSalvoSoleira() {
     }
     totalprecosoleira = totalsoleira;
 }
+/*função para validar o botão de excluir*/
 
 function exibirlistaDuasVezes() {
     exibirlista();
     setTimeout(exibirlista, 500);
 }
 
+/* Para exibir o calculo final do total*/
 
 function exibirlista() {
     exibirResultadoSalvoSoleira()
@@ -385,6 +473,7 @@ function exibirlista() {
     document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.95) + '</p>';
 
 }
+/*fazer validação dos tamanhos aceitos em cada campo*/
 
 function validarInputY() {
     var inputY = document.getElementById('largtampo');
@@ -408,6 +497,7 @@ function validarInputY1() {
 
     }
 }
+/*mandar menssagem whatsapp*/
 
 function extrairDadosParaWhatsApp() {
     var resultadosSalvos = localStorage.getItem('resultados');
@@ -425,9 +515,9 @@ function extrairDadosParaWhatsApp() {
             mensagemWhatsApp += "    - Material:  " + resultado.materialTampo + "\n";
             mensagemWhatsApp += "    - Subtotal: R$ " + (resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo).toFixed(2) + "\n";
             mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.comprimentoTampo + " cm, Largura = " + resultado.larguraTampo + " cm, Altura Rodopia = " + resultado.alturaRodopia + " cm, Altura Sóculo = " + resultado.alturaSoculo + " cm\n\n";
-            mensagemWhatsApp += "Valores sem cuba.\n\n ";
         });
-    } 
+        mensagemWhatsApp += "Valores sem cuba.\n\n ";
+    }
 
     if (resultadosSalvosSoleira && JSON.parse(resultadosSalvosSoleira).length > 0) {
         resultadosSalvosSoleira = JSON.parse(resultadosSalvosSoleira);
@@ -437,10 +527,15 @@ function extrairDadosParaWhatsApp() {
             mensagemWhatsApp += "    - Soleira: R$ " + resultado.valorSoleira.toFixed(2) + "\n";
             mensagemWhatsApp += "    - Material:  " + resultado.materialSoleira + "\n";
             mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.compSoleira + " cm, Largura = " + resultado.largSoleira + " cm\n\n";
-            mensagemWhatsApp += "Valores sem instalação. ";
         });
+        mensagemWhatsApp += "Valores sem instalação.\n\n ";
     }
 
+    if (isNaN(totalprecotampo)) {
+        totalprecotampo = 0;
+    } if (isNaN(totalprecosoleira)) {
+        totalprecosoleira = 0;
+    }
     mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira).toFixed(2) + "\n";
     mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira) * 0.95).toFixed(2) + "\n";
 
@@ -456,13 +551,14 @@ function enviarMensagemWhatsApp() {
     window.open(linkWhatsapp);
 }
 
-
+/*pegar ids de botões*/
 document.getElementById("whatsappbutton").addEventListener("click", enviarMensagemWhatsApp);
 document.getElementById('lista').addEventListener('click', salvarResultado);
 document.getElementById('lista').addEventListener('click', exibirlista);
 document.getElementById('listasoleira').addEventListener('click', salvarResultadoSoleira);
 document.getElementById('listasoleira').addEventListener('click', exibirlista);
 
+/*verificar se os inputs tão corretos e fazer vibrar*/
 
 function validarInput(inputId, mensagemId) {
     const input = document.getElementById(inputId);
@@ -477,6 +573,7 @@ function validarInput(inputId, mensagemId) {
     }
 }
 
+/* função para exibir os resultados sem precisar apertar nenhum botão*/
 
 function exibirTudo() {
     exibirlista();
