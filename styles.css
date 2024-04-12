@@ -27,12 +27,12 @@ header {
 }
 
 /*materiais*/
-.menu {
+.menu, .cubacozinha, .cubatanque {
     display: flex;
     overflow-x: auto;
 }
 
-div.menu {
+div.menu, div.cubacozinha, div.cubatanque {
     height: auto;
     width: 80vw;
     max-width: 1000px;
@@ -44,35 +44,72 @@ div.menu {
     cursor: pointer;
 }
 
-.imagem img {
-    max-width: 100px;
-    /* Ajuste conforme necessário */
-    width: 100px;
-    /* largura desejada */
-    height: 100px;
-    /* altura desejada */
-    object-fit: cover;
-    /* para garantir que a imagem preencha a área e corte o excesso */
+/*cubas e tanque*/
+.cubasinox {
+    display: grid;
+    border-radius: 10px;
 
 }
 
-.imagem p {
+.cubacozinha, .cubatanque {
+    display: none;
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+
+}
+
+.imagem img {
+    max-width: 100px;
+
+    width: 100px;
+
+    height: 100px;
+
+    object-fit: cover;
+}
+
+.fotoscuba img, .fotostanque img {
+    max-width: 500px;
+
+    width: 300px;
+
+    height: 300px;
+
+    object-fit: cover;
+}
+
+button.cubas, button.tanques {
+    margin: 2px;
+    width: 200px;
+    height: 30px;
+    background-color: rgb(176, 176, 236);
+}
+
+.imagem p, .fotoscuba p, .fotostanque p {
     font-size: 12px;
     margin-top: 5px;
 }
 
-.imagem.selecionada {
+.imagem.selecionada, .fotoscuba.selecionada, .fotostanque.selecionada {
     filter: brightness(70%);
-    /* Ajuste o valor conforme necessário */
 }
 
 /*textos*/
+.alertamaterial, .alertamaterialsol {
+    font-size: 25px;
+    color: rgb(199, 5, 5);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    animation: pulse 2s;
+    animation-iteration-count: infinite;
+}
+
 .text1 {
     color: rgb(138, 138, 138);
     font-size: 12px;
 }
 
-.informacoes, .textomaterial {
+.informacoes, .textomaterial, .textomaterialsol {
     font-size: 20px;
     color: rgb(66, 1, 1);
 }
@@ -92,6 +129,9 @@ p {
     font-size: 12px;
     color: rgb(167, 167, 167)
 }
+
+/* coluna cubas */
+
 
 /*coluna calculo*/
 .colunacalculo {
@@ -236,17 +276,22 @@ li {
     grid-row: 2;
 }
 
+button1 {
+    width: 0px;
+    height: 0px;
+    border-radius: 30px;
+}
+
 .botaoX {
+    width: 25px;
+    height: 25px;
     grid-column: 1;
     grid-row: 1;
     display: grid;
-    width: auto;
-    height: auto;
-    border-radius: 2px;
     justify-content: center;
     align-content: center;
     font-size: 15px;
-    background-color: rgba(211, 0, 0, 0.671);
+    background-color: rgba(180, 32, 32, 0.671);
 }
 
 .botaoX:hover {
@@ -256,12 +301,6 @@ li {
 .botaoX:active {
     background-color: rgb(100, 29, 29);
 }
-
-button1 {
-    width: 0;
-    height: 0;
-}
-
 
 button {
     background-color: rgb(250, 138, 138);
@@ -320,6 +359,20 @@ input[type="number"i] {
 }
 
 @keyframes shake {
+    0%, 100% {
+        transform: translateX(-5px);
+    }
+
+    25%, 75% {
+        transform: translateX(5px);
+    }
+
+    50% {
+        transform: translateX(-5px);
+    }
+}
+
+@keyframes pulse {
     0%, 100% {
         transform: translateX(-5px);
     }
