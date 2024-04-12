@@ -54,19 +54,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 var material = 0;
+var namematerial = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     var imagens = document.querySelectorAll('.imagem');
 
+
     imagens.forEach(function (imagem) {
         imagem.addEventListener('click', function () {
             var valorMaterial = parseFloat(imagem.dataset.valor);
+            var nameMaterial = imagem.dataset.name;
             material = valorMaterial;
+            namematerial = nameMaterial;
 
             imagens.forEach(function (outraImagem) {
                 outraImagem.classList.remove('selecionada');
             });
-            imagem.classList.add('selecionada');
+
+            // Selecionar a imagem com base no namematerial
+            imagens.forEach(function (outraImagem) {
+                if (outraImagem.dataset.name === namematerial) {
+                    outraImagem.classList.add('selecionada');
+                }
+            });
+
+            resultado();
+            resultadosoleira();
+            selecmaterial()
         });
 
         imagem.addEventListener('dragstart', function (event) {
@@ -75,9 +89,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function selecmaterial(){
+var infotextomaterial = document.getElementById('textomaterial');
+    infotextomaterial.innerHTML = 'Material: '+ namematerial;
+    console.log(infotextomaterial)
+}
+
 var percentualtampo1 = 1.8;
 var percentualsoleira = 1.6;
 var percentualtampo = 0;
+
 
 function resultado() {
 
@@ -92,6 +113,8 @@ function resultado() {
     var infolarguratampo = document.getElementById('mlargtampo');
     var infoalturarodopia = document.getElementById('maltrodopia');
     var infoalturasoculo = document.getElementById('maltsoculo');
+    var infonomematerial = document.getElementById('nomematerial');
+
 
     // Verifica se os valores são NaN e os trata
     if (isNaN(material)) {
@@ -114,6 +137,8 @@ function resultado() {
     infolarguratampo.innerHTML = ' Largura: ' + larguratampo + ' cm';
     infoalturarodopia.innerHTML = 'Altura Rodopia: ' + alturarodopia + ' cm';
     infoalturasoculo.innerHTML = 'Altura Soculo: ' + alturasoculo + ' cm';
+    infonomematerial.innerHTML = 'Material: ' + namematerial;
+
     if (material > 0) {
         if (larguratampo > 0 && larguratampo < 50) {
             var difpercentualtampo = (50 - larguratampo) / 100;
@@ -161,6 +186,7 @@ function resultado() {
 }
 
 
+
 function resultadosoleira() {
 
     var comprimentosoleira = parseFloat(document.getElementById('compsoleira').value.replace(/\D/g, ''));
@@ -168,6 +194,9 @@ function resultadosoleira() {
     var infsoleira = document.getElementById('valorsoleira');
     var infcompsoleira = document.getElementById('infcompsoleira');
     var inflargsoleira = document.getElementById('inflargsoleira');
+    var infonomematerialsol = document.getElementById('nomematerialsol');
+   
+    
 
     if (isNaN(comprimentosoleira)) {
         comprimentosoleira = 0;
@@ -181,6 +210,7 @@ function resultadosoleira() {
 
     infcompsoleira.textContent = 'Comrpimento: ' + comprimentosoleira + ' cm --- ';
     inflargsoleira.textContent = 'Largura: ' + largurasoleira + ' cm';
+    infonomematerialsol.innerHTML = 'Material: ' + namematerial;
     if (material > 0) {
         if (comprimentosoleira > 0) {
             var resSoleira = (comprimentosoleira * (largurasoleira + 1) * material * percentualsoleira) / 100;
@@ -218,7 +248,7 @@ function salvarResultado() {
     maltrodopia = parseFloat(document.getElementById('maltrodopia').textContent.replace(/[^\d.,]/g, '').replace('.', '').replace(',', '.'));
     maltsoculo = parseFloat(document.getElementById('maltsoculo').textContent.replace(/[^\d.,]/g, '').replace('.', '').replace(',', '.'));
 
-    resultadosSalvos.push({ valorTampo: tampo, valorRodopia: rodopia, valorSoculo: soculo, comprimentoTampo: mcomptampo, larguraTampo: mlargtampo, alturaRodopia: maltrodopia, alturaSoculo: maltsoculo });
+    resultadosSalvos.push({ valorTampo: tampo, valorRodopia: rodopia, valorSoculo: soculo, comprimentoTampo: mcomptampo, larguraTampo: mlargtampo, alturaRodopia: maltrodopia, alturaSoculo: maltsoculo, materialTampo: namematerial });
     localStorage.setItem('resultados', JSON.stringify(resultadosSalvos));
 
     exibirResultadosSalvos();
@@ -236,7 +266,7 @@ function salvarResultadoSoleira() {
     compsoleira = parseFloat(document.getElementById('infcompsoleira').textContent.replace(/[^\d.,]/g, '').replace('.', '').replace(',', '.'));
     largsoleira = parseFloat(document.getElementById('inflargsoleira').textContent.replace(/[^\d.,]/g, '').replace('.', '').replace(',', '.'));
 
-    resultadoSalvoSoleira.push({ valorSoleira: soleira, compSoleira: compsoleira, largSoleira: largsoleira });
+    resultadoSalvoSoleira.push({ valorSoleira: soleira, compSoleira: compsoleira, largSoleira: largsoleira , materialSoleira: namematerial });
     localStorage.setItem('resultadosoleira', JSON.stringify(resultadoSalvoSoleira));
 
     exibirResultadoSalvoSoleira();
@@ -261,8 +291,8 @@ function exibirResultadosSalvos() {
         resultadosSalvos.forEach(function (resultado, indice) {
             let itemLista = document.createElement('li');
             itemLista.innerHTML = 'Tampo: ' + (indice + 1) + '  |  ' + formatarMoeda(resultado.valorTampo) + ' - Rodopia ' + formatarMoeda(resultado.valorRodopia) + ' - Sóculo ' +
-                formatarMoeda(resultado.valorSoculo) + ' ---  SubTotal' + formatarMoeda(resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo) +
-                '<p class="infomedidas"> Medidas -- Comprimento: ' + resultado.comprimentoTampo + ' cm   |   largura: ' + resultado.larguraTampo + ' cm   |   Altura Rodopia: ' + resultado.alturaRodopia + ' cm   |   Altura Soculo: ' + resultado.alturaSoculo + ' cm </p>';
+                formatarMoeda(resultado.valorSoculo) + ' ---  SubTotal ' + formatarMoeda(resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo) +
+                '<p class="infomedidas"> Medidas -- Comprimento: ' + resultado.comprimentoTampo + ' cm   |   largura: ' + resultado.larguraTampo + ' cm   |   Altura Rodopia: ' + resultado.alturaRodopia + ' cm   |   Altura Soculo: ' + resultado.alturaSoculo + ' cm |   Material: ' + resultado.materialTampo + '</p>';
 
             let botaoExcluir = document.createElement('button1');
             botaoExcluir.innerHTML = '<button onclick="exibirlistaDuasVezes()" class="botaoX"> X </button>';
@@ -308,7 +338,7 @@ function exibirResultadoSalvoSoleira() {
 
         resultadoSalvoSoleira.forEach(function (resultado, indice) {
             let itemListaSoleira = document.createElement('li');
-            itemListaSoleira.innerHTML = 'Soleira: ' + (indice + 1) + '  |  ' + formatarMoeda(resultado.valorSoleira) + ' -- <p class="infomedidas2"> Comprimento: ' + resultado.compSoleira + ' cm   |   ' + ' Largura: ' + resultado.largSoleira + ' cm</p> ';
+            itemListaSoleira.innerHTML = 'Soleira: ' + (indice + 1) + '  |  ' + formatarMoeda(resultado.valorSoleira) + ' -- <p class="infomedidas2"> Comprimento: ' + resultado.compSoleira + ' cm   |   ' + ' Largura: ' + resultado.largSoleira + ' cm |   Material: ' + resultado.materialSoleira + '</p>';
 
             let botaoExcluir = document.createElement('button1');
             botaoExcluir.innerHTML = '<button onclick="exibirlistaDuasVezes()" class="botaoX"> X </button>';
@@ -379,44 +409,41 @@ function validarInputY1() {
     }
 }
 
-
-
-
 function extrairDadosParaWhatsApp() {
     var resultadosSalvos = localStorage.getItem('resultados');
     var resultadosSalvosSoleira = localStorage.getItem('resultadosoleira');
     var mensagemWhatsApp = "Orçamento solicitado:\n\n";
 
-    if (resultadosSalvos) {
+    if (resultadosSalvos && JSON.parse(resultadosSalvos).length > 0) {
         resultadosSalvos = JSON.parse(resultadosSalvos);
         mensagemWhatsApp += "Tampos:\n";
         resultadosSalvos.forEach(function (resultado, indice) {
             mensagemWhatsApp += "  Produto " + (indice + 1) + ":\n";
             mensagemWhatsApp += "    - Tampo: R$ " + resultado.valorTampo.toFixed(2) + "\n";
             mensagemWhatsApp += "    - Rodopia: R$ " + resultado.valorRodopia.toFixed(2) + "\n";
-            mensagemWhatsApp += "    - Sóculo: R$ " + resultado.valorSoculo.toFixed(2) + "\n\n";
+            mensagemWhatsApp += "    - Sóculo: R$ " + resultado.valorSoculo.toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Material:  " + resultado.materialTampo + "\n";
             mensagemWhatsApp += "    - Subtotal: R$ " + (resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo).toFixed(2) + "\n";
             mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.comprimentoTampo + " cm, Largura = " + resultado.larguraTampo + " cm, Altura Rodopia = " + resultado.alturaRodopia + " cm, Altura Sóculo = " + resultado.alturaSoculo + " cm\n\n";
+            mensagemWhatsApp += "Valores sem cuba.\n\n ";
         });
-    } else {
-        mensagemWhatsApp += "Nenhum tampo salvo.\n\n";
-    }
+    } 
 
-    if (resultadosSalvosSoleira) {
+    if (resultadosSalvosSoleira && JSON.parse(resultadosSalvosSoleira).length > 0) {
         resultadosSalvosSoleira = JSON.parse(resultadosSalvosSoleira);
         mensagemWhatsApp += "Soleiras:\n";
         resultadosSalvosSoleira.forEach(function (resultado, indice) {
             mensagemWhatsApp += "  Produto " + (indice + 1) + ":\n";
             mensagemWhatsApp += "    - Soleira: R$ " + resultado.valorSoleira.toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Material:  " + resultado.materialSoleira + "\n";
             mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.compSoleira + " cm, Largura = " + resultado.largSoleira + " cm\n\n";
+            mensagemWhatsApp += "Valores sem instalação. ";
         });
-    } else {
-        mensagemWhatsApp += "Nenhuma soleira salva.\n\n";
     }
 
     mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira).toFixed(2) + "\n";
     mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira) * 0.95).toFixed(2) + "\n";
-    mensagemWhatsApp += "Valores sem cuba." + "\n";
+
 
     return mensagemWhatsApp;
 }
@@ -458,4 +485,3 @@ function exibirTudo() {
 }
 
 window.onload = exibirTudo;
-
