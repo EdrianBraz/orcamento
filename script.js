@@ -119,16 +119,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 nomecuba = "";
                 document.getElementById('cuba').textContent = '';
                 this.classList.remove('selecionada');
+                exibirlista()
             } else {
                 cuba = valorCuba;
                 nomecuba = nomeCuba;
-                exibirResultadosSalvos();
                 fotoscuba.forEach(function (outraFoto) {
                     outraFoto.classList.remove('selecionada');
                 });
                                 this.classList.add('selecionada');
+                                exibirlista()
             }
-            exibirlista()
+
 
             var salvarcuba = [];
             var salvarcubaAntigo = localStorage.getItem('cubas');
@@ -162,25 +163,25 @@ document.addEventListener("DOMContentLoaded", function (){
             var valorTanque = parseFloat(foto.dataset.valor);
             var nomeTanque = foto.dataset.name;
 
+
+
             if (foto.classList.contains('selecionada')) {
                 tanque = 0;
                 nometanque = "";
                 document.getElementById('tanque').textContent = '';
                 this.classList.remove('selecionada');
+                exibirlista()
             } else {
                 tanque = valorTanque;
                 nometanque = nomeTanque;
-                exibirResultadosSalvos();
                 
                 fotostanque.forEach(function (outraFoto) {
                     outraFoto.classList.remove('selecionada');
                 });
                 
                 this.classList.add('selecionada');
+                exibirlista()
             }
-        
-            exibirlista()
-
             var salvartanque = [];
             var salvartanqueAntigo = localStorage.getItem('tanque');
             if (salvartanqueAntigo) {
@@ -445,25 +446,18 @@ function exibirResultadosSalvos() {
             altsoculo += resultado.alturaSoculo;
         });
 
-        if (isNaN(cuba)) {
-            material = 0;
-        }
-        if (isNaN(tanque)) {
-            material = 0;
-        }
-
         if (cuba > 0){
         document.getElementById('cuba').textContent = 'valor cuba '+ nomecuba + formatarMoeda(cuba);
         } if (tanque > 0){
             document.getElementById('tanque').textContent = 'valor tanque '+ nometanque + formatarMoeda(tanque);
         } 
-        document.getElementById('total').textContent = 'Total: ' + formatarMoeda(totaltampo + totalrodopia + totalsoculo);
-        document.getElementById('totalavista').textContent = 'A vista: ' + formatarMoeda((totaltampo + totalrodopia + totalsoculo) * 0.95);
+        document.getElementById('total').textContent = 'Total: ' + formatarMoeda(totaltampo + totalrodopia + totalsoculo + cuba + tanque );
+        document.getElementById('totalavista').textContent = 'A vista: ' + formatarMoeda((totaltampo + totalrodopia + totalsoculo + cuba + tanque) * 0.95);
 
     } else {
         document.getElementById('lista-resultados').textContent = 'Nenhum resultado salvo.';
     }
-    console.log(cuba)
+
 
     totalprecotampo = totaltampo + totalrodopia + totalsoculo;
 }
@@ -526,6 +520,8 @@ function exibirlista() {
     if (isNaN(totalprecosoleira)) {
         totalprecosoleira = 0;
     }
+
+
     var precototal = totalprecotampo + totalprecosoleira + cuba + tanque;
 
     document.getElementById('totalservico').innerHTML = '<p class="texttotal"> Total: ' + formatarMoeda(precototal) + '</p>';
@@ -559,14 +555,12 @@ function validarInputY1() {
 /*mandar menssagem whatsapp*/
 
 function extrairDadosParaWhatsApp() {
-
-    resultado()
     var resultadosSalvos = localStorage.getItem('resultados');
     var resultadosSalvosSoleira = localStorage.getItem('resultadosoleira');
     var salvarcuba = localStorage.getItem('cubas');
     var salvartanque = localStorage.getItem('tanque');
     var mensagemWhatsApp = "Orçamento solicitado:\n\n";
-    
+
     if (resultadosSalvos && JSON.parse(resultadosSalvos).length > 0) {
         resultadosSalvos = JSON.parse(resultadosSalvos);
         mensagemWhatsApp += "Tampos:\n";
@@ -616,8 +610,13 @@ function extrairDadosParaWhatsApp() {
     } if (isNaN(totalprecosoleira)) {
         totalprecosoleira = 0;
     }
-    mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira).toFixed(2) + "\n";
-    mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira) * 0.95).toFixed(2) + "\n";
+    if (isNaN(cuba)) {
+        cuba = 0;
+    } if (isNaN(tanque)) {
+        tanque = 0;
+    }
+    mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira + cuba + tanque).toFixed(2) + "\n";
+    mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira + cuba + tanque) * 0.95).toFixed(2) + "\n";
 
 
     return mensagemWhatsApp;
