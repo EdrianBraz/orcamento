@@ -111,41 +111,86 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fotoscuba.forEach(function (foto) {
         foto.addEventListener('click', function () {
-            var valorCuba = parseFloat(foto.dataset.valor);
-            var nomeCuba = foto.dataset.name;
-            cuba = valorCuba;
-            nomecuba = nomeCuba;
+            var valorCuba = parseFloat(this.dataset.valor);
+            var nomeCuba = this.dataset.name;
 
-            fotoscuba.forEach(function (outraFoto) {
-                outraFoto.classList.remove('selecionada');
-            });
+            if (this.classList.contains('selecionada')) {
+                cuba = 0;
+                nomecuba = "";
+                document.getElementById('cuba').textContent = '';
+                this.classList.remove('selecionada');
+            } else {
+                cuba = valorCuba;
+                nomecuba = nomeCuba;
+                exibirResultadosSalvos();
+                fotoscuba.forEach(function (outraFoto) {
+                    outraFoto.classList.remove('selecionada');
+                });
+                                this.classList.add('selecionada');
+            }
+            exibirlista()
 
-            // Selecionar a imagem clicada
-            foto.classList.add('selecionada');
+            var salvarcuba = [];
+            var salvarcubaAntigo = localStorage.getItem('cubas');
+            if (salvarcubaAntigo) {
+                salvarcuba = JSON.parse(salvarcubaAntigo);
+            }
+
+            salvarcuba = [{ nomeCuba: nomecuba, valorCuba: cuba }];
+            
+            localStorage.setItem('cubas', JSON.stringify(salvarcuba));
+
         });
 
         foto.addEventListener('dragstart', function (event) {
-            event.dataTransfer.setData('text/plain', foto.id);
+            event.dataTransfer.setData('text/plain', this.id);
         });
     });
+});
 
-    var tanque = 0;
-    var nometanque = [];
+
+
+var tanque = 0;
+var nometanque = [];
+
+
+document.addEventListener("DOMContentLoaded", function (){ 
     var fotostanque = document.querySelectorAll('.fotostanque');
 
     fotostanque.forEach(function (foto) {
         foto.addEventListener('click', function () {
             var valorTanque = parseFloat(foto.dataset.valor);
             var nomeTanque = foto.dataset.name;
-            tanque = valorTanque;
-            nometanque = nomeTanque;
 
-            fotostanque.forEach(function (outraFoto) {
-                outraFoto.classList.remove('selecionada');
-            });
+            if (foto.classList.contains('selecionada')) {
+                tanque = 0;
+                nometanque = "";
+                document.getElementById('tanque').textContent = '';
+                this.classList.remove('selecionada');
+            } else {
+                tanque = valorTanque;
+                nometanque = nomeTanque;
+                exibirResultadosSalvos();
+                
+                fotostanque.forEach(function (outraFoto) {
+                    outraFoto.classList.remove('selecionada');
+                });
+                
+                this.classList.add('selecionada');
+            }
+        
+            exibirlista()
 
-            // Selecionar a imagem clicada
-            foto.classList.add('selecionada');
+            var salvartanque = [];
+            var salvartanqueAntigo = localStorage.getItem('tanque');
+            if (salvartanqueAntigo) {
+                salvartanque = JSON.parse(salvartanqueAntigo);
+            }
+
+            salvartanque = [{ nomeTanque: nometanque, valorTanque: tanque }];
+            
+            localStorage.setItem('tanque', JSON.stringify(salvartanque));
+
         });
 
         foto.addEventListener('dragstart', function (event) {
@@ -153,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
 
 
 /*Função para exibir nome do material e quando o material não esta selecionado*/
@@ -178,6 +222,7 @@ function selecmaterial() {
 var percentualtampo1 = 1.8;
 var percentualsoleira = 1.6;
 var percentualtampo = 0;
+var comprimentotampo = 0;
 
 function resultado() {
 
@@ -267,6 +312,7 @@ function resultado() {
 }
 
 /*caluclo do resultado das soleiras*/
+var comprimentosoleira = 0;
 
 function resultadosoleira() {
 
@@ -399,12 +445,25 @@ function exibirResultadosSalvos() {
             altsoculo += resultado.alturaSoculo;
         });
 
+        if (isNaN(cuba)) {
+            material = 0;
+        }
+        if (isNaN(tanque)) {
+            material = 0;
+        }
+
+        if (cuba > 0){
+        document.getElementById('cuba').textContent = 'valor cuba '+ nomecuba + formatarMoeda(cuba);
+        } if (tanque > 0){
+            document.getElementById('tanque').textContent = 'valor tanque '+ nometanque + formatarMoeda(tanque);
+        } 
         document.getElementById('total').textContent = 'Total: ' + formatarMoeda(totaltampo + totalrodopia + totalsoculo);
         document.getElementById('totalavista').textContent = 'A vista: ' + formatarMoeda((totaltampo + totalrodopia + totalsoculo) * 0.95);
 
     } else {
         document.getElementById('lista-resultados').textContent = 'Nenhum resultado salvo.';
     }
+    console.log(cuba)
 
     totalprecotampo = totaltampo + totalrodopia + totalsoculo;
 }
@@ -467,7 +526,7 @@ function exibirlista() {
     if (isNaN(totalprecosoleira)) {
         totalprecosoleira = 0;
     }
-    var precototal = totalprecotampo + totalprecosoleira;
+    var precototal = totalprecotampo + totalprecosoleira + cuba + tanque;
 
     document.getElementById('totalservico').innerHTML = '<p class="texttotal"> Total: ' + formatarMoeda(precototal) + '</p>';
     document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.95) + '</p>';
@@ -500,10 +559,14 @@ function validarInputY1() {
 /*mandar menssagem whatsapp*/
 
 function extrairDadosParaWhatsApp() {
+
+    resultado()
     var resultadosSalvos = localStorage.getItem('resultados');
     var resultadosSalvosSoleira = localStorage.getItem('resultadosoleira');
+    var salvarcuba = localStorage.getItem('cubas');
+    var salvartanque = localStorage.getItem('tanque');
     var mensagemWhatsApp = "Orçamento solicitado:\n\n";
-
+    
     if (resultadosSalvos && JSON.parse(resultadosSalvos).length > 0) {
         resultadosSalvos = JSON.parse(resultadosSalvos);
         mensagemWhatsApp += "Tampos:\n";
@@ -516,10 +579,27 @@ function extrairDadosParaWhatsApp() {
             mensagemWhatsApp += "    - Subtotal: R$ " + (resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo).toFixed(2) + "\n";
             mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.comprimentoTampo + " cm, Largura = " + resultado.larguraTampo + " cm, Altura Rodopia = " + resultado.alturaRodopia + " cm, Altura Sóculo = " + resultado.alturaSoculo + " cm\n\n";
         });
-        mensagemWhatsApp += "Valores sem cuba.\n\n ";
+
+    }
+    if(cuba > 0) {
+        salvarcuba = JSON.parse(salvarcuba);
+        mensagemWhatsApp += "Cuba:\n";
+        salvarcuba.forEach(function (resultado){
+        mensagemWhatsApp +=  resultado.nomeCuba +' R$ '+ resultado.valorCuba + "\n";
+    });
+    }
+    if(tanque > 0) {
+        salvartanque = JSON.parse(salvartanque);
+        mensagemWhatsApp += "Tanque:\n";
+        salvartanque.forEach(function (resultado){
+        mensagemWhatsApp +=  resultado.nomeTanque +' R$ '+ resultado.valorTanque + "\n";
+    });
+    }
+    if(cuba === 0 && tanque === 0) {
+        mensagemWhatsApp += "Não esta incluso a cuba.\n";
     }
 
-    if (resultadosSalvosSoleira && JSON.parse(resultadosSalvosSoleira).length > 0) {
+    if (comprimentosoleira > 0) {
         resultadosSalvosSoleira = JSON.parse(resultadosSalvosSoleira);
         mensagemWhatsApp += "Soleiras:\n";
         resultadosSalvosSoleira.forEach(function (resultado, indice) {
