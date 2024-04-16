@@ -579,14 +579,14 @@ function extrairDadosParaWhatsApp() {
         salvarcuba = JSON.parse(salvarcuba);
         mensagemWhatsApp += "Cuba:\n";
         salvarcuba.forEach(function (resultado){
-        mensagemWhatsApp +=  resultado.nomeCuba +' R$ '+ resultado.valorCuba +",00 + "\n";
+        mensagemWhatsApp +=  resultado.nomeCuba +' R$ '+ resultado.valorCuba + "\n";
     });
     }
     if(tanque > 0) {
         salvartanque = JSON.parse(salvartanque);
         mensagemWhatsApp += "Tanque:\n";
         salvartanque.forEach(function (resultado){
-        mensagemWhatsApp +=  resultado.nomeTanque +' R$ '+ resultado.valorTanque +",00 + "\n";
+        mensagemWhatsApp +=  resultado.nomeTanque +' R$ '+ resultado.valorTanque + "\n";
     });
     }
     if(cuba === 0 && tanque === 0) {
@@ -615,8 +615,8 @@ function extrairDadosParaWhatsApp() {
     } if (isNaN(tanque)) {
         tanque = 0;
     }
-    mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira + cuba + tanque).toFixed(2) + "\n";
-    mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira + cuba + tanque) * 0.95).toFixed(2) + "\n";
+    mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira + cuba + tanque).toFixed(2) + ",00 "+ "\n";
+    mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira + cuba + tanque) * 0.95).toFixed(2) + ",00 " + "\n";
 
 
     return mensagemWhatsApp;
