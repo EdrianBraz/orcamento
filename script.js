@@ -579,14 +579,14 @@ function extrairDadosParaWhatsApp() {
         salvarcuba = JSON.parse(salvarcuba);
         mensagemWhatsApp += "Cuba:\n";
         salvarcuba.forEach(function (resultado){
-        mensagemWhatsApp +=  resultado.nomeCuba +' R$ '+ resultado.valorCuba + "\n";
+        mensagemWhatsApp +=  resultado.nomeCuba +' R$ '+ resultado.valorCuba +",00 + "\n";
     });
     }
     if(tanque > 0) {
         salvartanque = JSON.parse(salvartanque);
         mensagemWhatsApp += "Tanque:\n";
         salvartanque.forEach(function (resultado){
-        mensagemWhatsApp +=  resultado.nomeTanque +' R$ '+ resultado.valorTanque + "\n";
+        mensagemWhatsApp +=  resultado.nomeTanque +' R$ '+ resultado.valorTanque +",00 + "\n";
     });
     }
     if(cuba === 0 && tanque === 0) {
