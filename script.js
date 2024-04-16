@@ -280,7 +280,7 @@ function resultado() {
         } else {
             comprimentotampo = comprimentotampo
         }
-        var resTampo = ((comprimentotampo * material) * (percentualtampo > 0 ? percentualtampo : percentualtampo1));
+        var resTampo = ((comprimentotampo * material) * percentualtampo1);
         if (alturarodopia > 1, alturarodopia < 11) {
             alturarodopia = alturarodopia;
         } else if (alturarodopia > 11) {
@@ -566,11 +566,11 @@ function extrairDadosParaWhatsApp() {
         mensagemWhatsApp += "Tampos:\n";
         resultadosSalvos.forEach(function (resultado, indice) {
             mensagemWhatsApp += "  Produto " + (indice + 1) + ":\n";
-            mensagemWhatsApp += "    - Tampo: R$ " + resultado.valorTampo.toFixed(2) + "\n";
-            mensagemWhatsApp += "    - Rodopia: R$ " + resultado.valorRodopia.toFixed(2) + "\n";
-            mensagemWhatsApp += "    - Sóculo: R$ " + resultado.valorSoculo.toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Tampo:  " + formatarMoeda(resultado.valorTampo) + "\n";
+            mensagemWhatsApp += "    - Rodopia:  " + formatarMoeda(resultado.valorRodopia) + "\n";
+            mensagemWhatsApp += "    - Sóculo:  " + formatarMoeda(resultado.valorSoculo) + "\n";
             mensagemWhatsApp += "    - Material:  " + resultado.materialTampo + "\n";
-            mensagemWhatsApp += "    - Subtotal: R$ " + (resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo).toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Subtotal:  " + formatarMoeda(resultado.valorTampo + resultado.valorRodopia + resultado.valorSoculo) + "\n";
             mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.comprimentoTampo + " cm, Largura = " + resultado.larguraTampo + " cm, Altura Rodopia = " + resultado.alturaRodopia + " cm, Altura Sóculo = " + resultado.alturaSoculo + " cm\n\n";
         });
 
@@ -579,26 +579,26 @@ function extrairDadosParaWhatsApp() {
         salvarcuba = JSON.parse(salvarcuba);
         mensagemWhatsApp += "Cuba:\n";
         salvarcuba.forEach(function (resultado){
-        mensagemWhatsApp +=  resultado.nomeCuba +' R$ '+ resultado.valorCuba + "\n";
+        mensagemWhatsApp +=  resultado.nomeCuba +'  '+ formatarMoeda(resultado.valorCuba) + "\n\n";
     });
     }
     if(tanque > 0) {
         salvartanque = JSON.parse(salvartanque);
         mensagemWhatsApp += "Tanque:\n";
         salvartanque.forEach(function (resultado){
-        mensagemWhatsApp +=  resultado.nomeTanque +' R$ '+ resultado.valorTanque + "\n";
+        mensagemWhatsApp +=  resultado.nomeTanque +'  '+ formatarMoeda(resultado.valorTanque) +"\n\n";
     });
     }
     if(cuba === 0 && tanque === 0) {
         mensagemWhatsApp += "Não esta incluso a cuba.\n";
     }
 
-    if (comprimentosoleira > 0) {
+    if (resultadosSalvosSoleira && JSON.parse(resultadosSalvosSoleira).length > 0) {
         resultadosSalvosSoleira = JSON.parse(resultadosSalvosSoleira);
         mensagemWhatsApp += "Soleiras:\n";
         resultadosSalvosSoleira.forEach(function (resultado, indice) {
             mensagemWhatsApp += "  Produto " + (indice + 1) + ":\n";
-            mensagemWhatsApp += "    - Soleira: R$ " + resultado.valorSoleira.toFixed(2) + "\n";
+            mensagemWhatsApp += "    - Soleira:  " + formatarMoeda(resultado.valorSoleira) + "\n";
             mensagemWhatsApp += "    - Material:  " + resultado.materialSoleira + "\n";
             mensagemWhatsApp += "    - Medidas:  Comprimento = " + resultado.compSoleira + " cm, Largura = " + resultado.largSoleira + " cm\n\n";
         });
@@ -615,8 +615,8 @@ function extrairDadosParaWhatsApp() {
     } if (isNaN(tanque)) {
         tanque = 0;
     }
-    mensagemWhatsApp += "Total: R$" + (totalprecotampo + totalprecosoleira + cuba + tanque).toFixed(2) + ",00 "+ "\n";
-    mensagemWhatsApp += "Total à vista: R$" + ((totalprecotampo + totalprecosoleira + cuba + tanque) * 0.95).toFixed(2) + ",00 " + "\n";
+    mensagemWhatsApp += "Total:  " + formatarMoeda(totalprecotampo + totalprecosoleira + cuba + tanque) + "\n";
+    mensagemWhatsApp += "Total à vista:  " + formatarMoeda((totalprecotampo + totalprecosoleira + cuba + tanque) * 0.95) + "\n";
 
 
     return mensagemWhatsApp;
