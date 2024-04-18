@@ -317,7 +317,7 @@ var comprimentosoleira = 0;
 
 function resultadosoleira() {
 
-    var comprimentosoleira = parseFloat(document.getElementById('compsoleira').value.replace(/\D/g, ''));
+    var comprimentosoleira = parseFloat(document.getElementById('compsoleira').value);
     var largurasoleira = parseFloat(document.getElementById('largsoleira').value);
     var infsoleira = document.getElementById('valorsoleira');
     var infcompsoleira = document.getElementById('infcompsoleira');
