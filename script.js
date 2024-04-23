@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    toggleVisibility(buttonclick, elementHidden, buttonclick2, "Clique aqui para calcular Tampo");
+    toggleVisibility(buttonclick, elementHidden, buttonclick2, "Clique para calcular cozinhas e Tampos");
     toggleVisibility(buttonclick2, elementHidden2, buttonclick, "Clique aqui para calcular Soleira");
 });
 
