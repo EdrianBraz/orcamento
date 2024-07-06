@@ -264,7 +264,7 @@ function resultado() {
     infoalturasoculo.innerHTML = 'Altura Soculo: ' + alturasoculo + ' cm';
     infonomematerial.innerHTML = 'Material: ' + namematerial;
 
-    if (material > 0) {
+        if (material > 0) {
         if (larguratampo > 0 && larguratampo < 50) {
             var difpercentualtampo = (50 - larguratampo) / 100;
             percentualtampo = percentualtampo1 - difpercentualtampo;
@@ -273,6 +273,7 @@ function resultado() {
             percentualtampo = percentualtampo1 + difpercentualtampo;
         } else if (larguratampo === '' || larguratampo === 0) {
             larguratampo = 0;
+            percentualtampo = percentualtampo1;
         }
 
         if (isNaN(comprimentotampo) || larguratampo === 0) {
@@ -280,7 +281,7 @@ function resultado() {
         } else {
             comprimentotampo = comprimentotampo
         }
-        var resTampo = ((comprimentotampo * material) * percentualtampo1);
+        var resTampo = ((comprimentotampo * material) * percentualtampo);
         if (alturarodopia > 1, alturarodopia < 11) {
             alturarodopia = alturarodopia;
         } else if (alturarodopia > 11) {
@@ -304,7 +305,6 @@ function resultado() {
 
 
     }
-
 
     inftampo.textContent = 'Valor Tampo:  ' + formatarMoeda(resTampo / 100);
     infrodopia.textContent = 'Valor Rodopia:  ' + formatarMoeda(resRodopia / 100);
