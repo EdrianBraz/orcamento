@@ -279,7 +279,8 @@ function resultado() {
         if (isNaN(comprimentotampo) || larguratampo === 0) {
             comprimentotampo = 0;
         } else {
-            comprimentotampo = comprimentotampo
+                    comprimentotampo = comprimentotampo;
+                    percentualtampo = percentualtampo1;
         }
         var resTampo = ((comprimentotampo * material) * percentualtampo);
         if (alturarodopia > 1, alturarodopia < 11) {
