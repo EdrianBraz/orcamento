@@ -220,8 +220,8 @@ function selecmaterial() {
 }
 
 /*calculo resultado do tampo*/
-var percentualtampo1 = 1.8;
-var percentualsoleira = 1.6;
+var percentualtampo1 = 1.9;
+var percentualsoleira = 1.7;
 var percentualtampo = 0;
 var comprimentotampo = 0;
 
