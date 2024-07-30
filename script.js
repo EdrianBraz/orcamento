@@ -266,15 +266,12 @@ function resultado() {
 
         if (material > 0) {
             if (larguratampo > 0 && larguratampo < 50) {
-                console.log('menor que 50');
                 var difpercentualtampo = (50 - larguratampo) / 100;
                 percentualtampo = percentualtampo1 - difpercentualtampo;
                 } else if (larguratampo > 60) {
-                    console.log('maior que 60');
                     var difpercentualtampo = (larguratampo - 60) * 2.5 / 100;
                     percentualtampo = percentualtampo1 + difpercentualtampo;
                 } else if (larguratampo === '' || larguratampo === 0) {
-                    console.log('nao entedi');
                     larguratampo = 0;
                     percentualtampo = percentualtampo1;
                 } else if (larguratampo > 49 && larguratampo < 61) {
