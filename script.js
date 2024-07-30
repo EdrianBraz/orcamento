@@ -265,47 +265,50 @@ function resultado() {
     infonomematerial.innerHTML = 'Material: ' + namematerial;
 
         if (material > 0) {
-        if (larguratampo > 0 && larguratampo < 50) {
-            var difpercentualtampo = (50 - larguratampo) / 100;
-            percentualtampo = percentualtampo1 - difpercentualtampo;
-        } else if (larguratampo > 60) {
-            var difpercentualtampo = (larguratampo - 60) * 2.5 / 100;
-            percentualtampo = percentualtampo1 + difpercentualtampo;
-        } else if (larguratampo === '' || larguratampo === 0) {
-            larguratampo = 0;
-            percentualtampo = percentualtampo1;
-        }
-
-        if (isNaN(comprimentotampo) || larguratampo === 0) {
-            comprimentotampo = 0;
-        } else {
-                    comprimentotampo = comprimentotampo;
+            if (larguratampo > 0 && larguratampo < 50) {
+                console.log('menor que 50');
+                var difpercentualtampo = (50 - larguratampo) / 100;
+                percentualtampo = percentualtampo1 - difpercentualtampo;
+                } else if (larguratampo > 60) {
+                    console.log('maior que 60');
+                    var difpercentualtampo = (larguratampo - 60) * 2.5 / 100;
+                    percentualtampo = percentualtampo1 + difpercentualtampo;
+                } else if (larguratampo === '' || larguratampo === 0) {
+                    console.log('nao entedi');
+                    larguratampo = 0;
                     percentualtampo = percentualtampo1;
-        }
-        var resTampo = ((comprimentotampo * material) * percentualtampo);
-        if (alturarodopia > 1, alturarodopia < 11) {
-            alturarodopia = alturarodopia;
-        } else if (alturarodopia > 11) {
-            alturarodopia = comprimentotampo * alturarodopia * material;
+                } else if (larguratampo > 49 && larguratampo < 61) {
+                    percentualtampo = percentualtampo1;
+                }
+
+            if (isNaN(comprimentotampo) || larguratampo === 0) {
+                comprimentotampo = 0;
+            } else {
+                        comprimentotampo = comprimentotampo;
+            }
+
+            var resTampo = ((comprimentotampo * material) * percentualtampo);
+            if (alturarodopia > 1, alturarodopia < 11) {
+                alturarodopia = alturarodopia;
+            } else if (alturarodopia > 11) {
+                alturarodopia = comprimentotampo * alturarodopia * material;
+            } else {
+                alturarodopia = 0;
+            }
+            var resRodopia = alturarodopia * percentualsoleira / 100;
+
+            if (alturasoculo > 0) {
+                alturasoculo = (comprimentotampo + 50) * alturasoculo * material;
+            } else {
+                alturasoculo = 0;
+            }
+            resSoculo = alturasoculo * percentualsoleira / 100;
         } else {
-            alturarodopia = 0;
+            resTampo = 0;
+            resRodopia = 0;
+            resSoculo = 0;
+            infoalertamaterial.innerHTML = 'Selecione o material.';
         }
-        var resRodopia = alturarodopia * percentualsoleira / 100;
-
-        if (alturasoculo > 0) {
-            alturasoculo = (comprimentotampo + 50) * alturasoculo * material;
-        } else {
-            alturasoculo = 0;
-        }
-        resSoculo = alturasoculo * percentualsoleira / 100;
-    } else {
-        resTampo = 0;
-        resRodopia = 0;
-        resSoculo = 0;
-        infoalertamaterial.innerHTML = 'Selecione o material.';
-
-
-    }
 
     inftampo.textContent = 'Valor Tampo:  ' + formatarMoeda(resTampo / 100);
     infrodopia.textContent = 'Valor Rodopia:  ' + formatarMoeda(resRodopia / 100);
@@ -453,7 +456,7 @@ function exibirResultadosSalvos() {
             document.getElementById('tanque').textContent = 'valor tanque '+ nometanque + formatarMoeda(tanque);
         } 
         document.getElementById('total').textContent = 'Total: ' + formatarMoeda(totaltampo + totalrodopia + totalsoculo + cuba + tanque );
-        document.getElementById('totalavista').textContent = 'A vista: ' + formatarMoeda((totaltampo + totalrodopia + totalsoculo + cuba + tanque) * 0.95);
+        document.getElementById('totalavista').textContent = 'A vista: ' + formatarMoeda((totaltampo + totalrodopia + totalsoculo + cuba + tanque) * 0.91);
 
     } else {
         document.getElementById('lista-resultados').textContent = 'Nenhum resultado salvo.';
@@ -495,7 +498,7 @@ function exibirResultadoSalvoSoleira() {
         });
 
         document.getElementById('totalsoleira').textContent = 'Total: ' + formatarMoeda(totalsoleira);
-        document.getElementById('totalsoleiraavista').textContent = 'A vista: ' + formatarMoeda((totalsoleira) * 0.95);
+        document.getElementById('totalsoleiraavista').textContent = 'A vista: ' + formatarMoeda((totalsoleira) * 0.91);
 
 
     } else {
@@ -526,7 +529,7 @@ function exibirlista() {
     var precototal = totalprecotampo + totalprecosoleira + cuba + tanque;
 
     document.getElementById('totalservico').innerHTML = '<p class="texttotal"> Total: ' + formatarMoeda(precototal) + '</p>';
-    document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.95) + '</p>';
+    document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.91) + '</p>';
 
 }
 /*fazer validação dos tamanhos aceitos em cada campo*/
@@ -590,7 +593,9 @@ function extrairDadosParaWhatsApp() {
         mensagemWhatsApp +=  resultado.nomeTanque +'  '+ formatarMoeda(resultado.valorTanque) +"\n\n";
     });
     }
-    if(cuba === 0 && tanque === 0) {
+
+    if (totalprecotampo == 0){
+    } else if (cuba === 0 && tanque === 0) {
         mensagemWhatsApp += "Não esta incluso a cuba.\n";
     }
 
