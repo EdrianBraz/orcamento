@@ -495,7 +495,7 @@ function exibirResultadoSalvoSoleira() {
         });
 
         document.getElementById('totalsoleira').textContent = 'Total: ' + formatarMoeda(totalsoleira);
-        document.getElementById('totalsoleiraavista').textContent = 'A vista: ' + formatarMoeda((totalsoleira) * 0.91);
+        document.getElementById('totalsoleiraavista').textContent = 'A vista: ' + formatarMoeda((totalsoleira) * 0.95);
 
 
     } else {
@@ -526,7 +526,7 @@ function exibirlista() {
     var precototal = totalprecotampo + totalprecosoleira + cuba + tanque;
 
     document.getElementById('totalservico').innerHTML = '<p class="texttotal"> Total: ' + formatarMoeda(precototal) + '</p>';
-    document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.91) + '</p>';
+    document.getElementById('totalservicoavista').innerHTML = '<p class="texttotal">A vista: ' + formatarMoeda((precototal) * 0.95) + '</p>';
 
 }
 /*fazer validação dos tamanhos aceitos em cada campo*/
