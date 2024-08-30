@@ -453,7 +453,7 @@ function exibirResultadosSalvos() {
             document.getElementById('tanque').textContent = 'valor tanque '+ nometanque + formatarMoeda(tanque);
         } 
         document.getElementById('total').textContent = 'Total: ' + formatarMoeda(totaltampo + totalrodopia + totalsoculo + cuba + tanque );
-        document.getElementById('totalavista').textContent = 'A vista: ' + formatarMoeda((totaltampo + totalrodopia + totalsoculo + cuba + tanque) * 0.91);
+        document.getElementById('totalavista').textContent = 'A vista: ' + formatarMoeda((totaltampo + totalrodopia + totalsoculo + cuba + tanque) * 0.95);
 
     } else {
         document.getElementById('lista-resultados').textContent = 'Nenhum resultado salvo.';
