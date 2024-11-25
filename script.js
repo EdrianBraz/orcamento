@@ -288,14 +288,14 @@ function resultado() {
             if (alturarodopia > 1, alturarodopia < 11) {
                 alturarodopia = alturarodopia;
             } else if (alturarodopia > 11) {
-                alturarodopia = comprimentotampo * alturarodopia * material;
+                alturarodopia = comprimentotampo * (alturarodopia + 1) * material ;
             } else {
                 alturarodopia = 0;
             }
             var resRodopia = alturarodopia * percentualsoleira / 100;
 
             if (alturasoculo > 0) {
-                alturasoculo = (comprimentotampo + 50) * alturasoculo * material;
+                alturasoculo = (comprimentotampo + 50) * (alturasoculo + 1 ) * material;
             } else {
                 alturasoculo = 0;
             }
